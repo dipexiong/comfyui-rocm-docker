@@ -5,6 +5,7 @@ services:
     environment:
       - HSA_OVERRIDE_GFX_VERSION=10.3.0
       - HIP_VISIBLE_DEVICES=0
+      - PYTORCH_HIP_ALLOC_CONF=expandable_segments:True
     network_mode: host
     devices:
       - /dev/kfd
@@ -17,9 +18,10 @@ services:
     security_opt:
       - seccomp=unconfined
     volumes:
-      - ./:/pwd
-      - ./data/models/checkpoints:/comfyui/models/checkpoints
-      - ./data/output:/comfyui/output
+      - comfyui-data:/comfyui
     stdin_open: true
     tty: true
     restart: "always"
+
+volumes:
+  comfyui-data:
